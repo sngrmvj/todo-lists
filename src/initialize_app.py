@@ -1,19 +1,22 @@
 
 from flask import Flask
+from flask_pymongo import PyMongo
+import os,sys
+sys.path.append(os.path.abspath('./src/')) 
 from src.config import app_config 
-from models.initialize_db import db
+
 
 
 def create_app(env_name):
   """
-  Create app
+    Note - Create app
   """
 
-  
   # app initiliazation
   app = Flask(__name__)
   app.config.from_object(app_config[env_name])
-  db.init_app(app) 
+  mongodb_client = PyMongo(app, uri=os.getenv("DATABASE_URL"))
+  app.config['db_connect'] = mongodb_client.db
 
 
   # Add Blueprints here 

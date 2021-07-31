@@ -1,6 +1,8 @@
 
-import os,sys
+import os
 
+os.environ["DATABASE_URL"] = "mongodb://localhost:27017/planners"
+os.environ['FLASK_ENV'] = 'production'
 
 class Development(object):
     """
