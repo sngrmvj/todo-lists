@@ -1,9 +1,10 @@
 Flask
 Flask-Cors
-Flask-Migrate
 Flask-PyMongo
 pymongo
-alembic
 kafka-python
 lz4
 crc32c
+jwt
+PyJWT
+requests
