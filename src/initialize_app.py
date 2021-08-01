@@ -4,7 +4,7 @@ from flask_pymongo import PyMongo
 import os,sys
 sys.path.append(os.path.abspath('./src/')) 
 from src.config import app_config 
-
+from src.views.general import general_api
 
 
 def create_app(env_name):
@@ -20,6 +20,7 @@ def create_app(env_name):
 
 
   # Add Blueprints here 
+  app.register_blueprint(general_api, url_prefix='todo/v1/general') 
 
 
   return app
