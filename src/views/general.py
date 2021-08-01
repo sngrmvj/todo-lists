@@ -16,6 +16,8 @@ def add_task():
         Load the tasks under the name of the person.
         But it has two keys, one - daily, second - general.
         We are laoding this to only general
+
+        IMPLEMENT KAFKA HERE 
     """
 
 
@@ -33,6 +35,7 @@ def get_tasks():
         Load the tasks under the name of the person.
         But it has two keys, one - daily, second - general.
         We are laoding this to only general
+        TRY TO IMPLEMENT KAFKA HERE
     """
     decoded_token = validate_token(request.headers.get('Authorization', None))
     db_object = current_app.config["db_connect"]
@@ -50,6 +53,8 @@ def get_tasks():
 """Get Tasks to the DB API"""
 @general_api.route('/update', methods=['PUT'])
 def update_tasks():
+
+    """IMPLEMENT KAFKA HERE"""
     pass
 
 
@@ -58,6 +63,6 @@ def update_tasks():
 def delete_tasks():
     """
         Note - Check whether to pass it in body or as path parameter
-
+        IMPLEMENT KAFKA HERE
     """
     pass
