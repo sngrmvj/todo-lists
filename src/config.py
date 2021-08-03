@@ -3,6 +3,7 @@ import os
 
 os.environ["DATABASE_URL"] = "mongodb://localhost:27017/planners"
 os.environ['FLASK_ENV'] = 'production'
+os.environ['SECRET_KEY'] = 'django-insecure-06%z8j%5jube2n@_wfa6jbemh-m2gh&ql-&67db9^qosycj#$z'
 
 class Development(object):
     """

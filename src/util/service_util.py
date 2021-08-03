@@ -1,7 +1,6 @@
 from flask import Response,json 
-import jwt
+import os,jwt
 
-SECRET_KEY = 'django-insecure-06%z8j%5jube2n@_wfa6jbemh-m2gh&ql-&67db9^qosycj#$z'
 
 
 """ >>>> Function Calls """
@@ -21,7 +20,7 @@ def custom_response(res, status_code):
 def validate_token(token):
     token = token.split(" ")[1]
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+        payload = jwt.decode(token, os.getenv("SECRET_KEY") , algorithms=["HS256"])
         return payload
     except jwt.ExpiredSignatureError:
         return 'Signature expired. Please log in again.'
