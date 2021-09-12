@@ -2,9 +2,8 @@ Flask
 Flask-Cors
 Flask-PyMongo
 pymongo
-kafka-python
+confluent-kafka
 lz4
 crc32c
-jwt
 PyJWT
 requests

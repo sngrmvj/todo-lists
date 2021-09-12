@@ -1,16 +1,24 @@
 import os,sys
 sys.path.append(os.path.abspath('./src/'))
 from src.util.service_util import custom_response, validate_token
-from flask import request, Blueprint, current_app
+from flask import app, request, Blueprint, current_app
+from config import app_config, kafka_topics
+from kafka import catch_kafka_error, basic_consume_loop
 
 
 """Blueprint"""
 general_api = Blueprint('general', __name__)
 
 
+"""Attributes"""
+config = app_config
+
+
+
+
 """Load Tasks to the DB API"""
-@general_api.route('/load', methods=['POST'])
-def add_task():
+# @general_api.route('/load', methods=['POST'])
+def send_user_general_tasks():
     """
         Note - 
         Load the tasks under the name of the person.
@@ -20,8 +28,13 @@ def add_task():
         IMPLEMENT KAFKA HERE 
     """
 
+    producer = config['kafka_producer']
+    producer.produce(kafka_topics['general'][0], key="name_of_person", value="daily_task", callback=catch_kafka_error)
+    # Wait up to 1 second for events. Callbacks will be invoked during
+    # this method call if the message is acknowledged.
+    producer.poll(1)
 
-    return custom_response({"response":{"message":"successfully added"}},201)
+    # return custom_response({"response":{"message":"successfully sent"}},201)
 
 
 
