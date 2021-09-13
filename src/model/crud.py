@@ -3,8 +3,14 @@ import pymongo,os
 
 
 
-
+# =================
+# Get a particular collection
+# =================
 def get_collection(type):
+    """
+        Note - Get a particular collection
+    """
+
     try:
         myclient = pymongo.MongoClient(os.environ.get('DATABASE_URL'))
         dblist = myclient.list_database_names()
@@ -23,8 +29,28 @@ def get_collection(type):
 
 
 
+# =================
+# Get all records
+# =================
+def get_all(type):
+
+    try:
+        # Based on the type of the collection it fetches us that particular collection
+        mycol = get_collection(type)
+
+        # Writing all the items to a list and returning it.
+        all_records = [item for item in mycol.find()]
+        return all_records
+
+    except Exception as error:
+        print(f"Error while getting all records- {error}")
 
 
+
+
+# =================
+# Get a particular record
+# =================
 def get_record(query, type):
     try:
         # Based on the type of the collection it fetches us that particular collection
@@ -44,7 +70,9 @@ def get_record(query, type):
 
 
 
-
+# =================
+# Put a particular record
+# =================
 def insert_record(new_query,type):
     try:
         # Based on the type of the collection it fetches us that particular collection
@@ -62,7 +90,9 @@ def insert_record(new_query,type):
 
 
 
-
+# =================
+# Update a particular record
+# =================
 def update_record(query,new_values,type):
     try:
         # Based on the type of the collection it fetches us that particular collection
@@ -81,7 +111,9 @@ def update_record(query,new_values,type):
 
 
 
-
+# =================
+# Delete a particular record
+# =================
 def delete_record(query,type):
     try:
         # Based on the type of the collection it fetches us that particular collection
@@ -101,12 +133,14 @@ def delete_record(query,type):
             return True
 
     except Exception as error:
-        print(f">>>> Error while updating the particular record - {error}")
+        print(f">>>> Error while deleting the particular record - {error}")
 
 
 
 
-
+# =================
+# Drop a particular collection
+# =================
 def drop_collection(type):
     try:
         # Based on the type of the collection it fetches us that particular collection
@@ -116,4 +150,4 @@ def drop_collection(type):
         mycol.drop()
 
     except Exception as error:
-        print(f">>>> Error while updating the particular record - {error}")
+        print(f">>>> Error while dropping the collection - {error}")
