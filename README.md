@@ -1,2 +1,5 @@
 # To Do Lists
-This is where we manage the tasks of daily tasks and general tasks
+
+##### Steps
+- Kafka service lies in between the frontend and backend.
+- Frontend has to manage the access of the kafka stream.
