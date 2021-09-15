@@ -1,32 +1,37 @@
-import pymongo,os
+from pymongo import MongoClient
+import os
 
-def create_database():
-    try:
-        myclient = pymongo.MongoClient(os.environ.get('DATABASE_URL'))
-        dblist = myclient.list_database_names()
-        if os.environ.get('DATABASE_NAME') not in dblist:
-            mydb = myclient[os.environ.get('DATABASE_NAME')]
-        else:
-            print(">>>> Database is present")
+def create_db_collections():
+    try:        
+        # Creating a client
+        client = MongoClient(os.environ.get('DATABASE_URL'))
+
+        # Creating sample queries
+        my_general_query = {'name': 'dummy','general':['work']}
+        my_daily_query = {'name': 'dummy','daily':['sleeping']}
+
+        # Get the Database
+        mydb = client[os.environ.get('DATABASE_NAME')]
+        
+        # Get the collections
+        general_collection = mydb[os.environ.get('GENERAL_COLLECTION')]
+        daily_collection = mydb[os.environ.get('DAILY_COLLECTION')]
+
+        # Check whether the data is inserted or not
+        my_general_doc = general_collection.find(my_general_query)
+        my_daily_doc = daily_collection.find(my_daily_query)
+
+        my_general_doc = [x for x in my_general_doc]
+        my_daily_doc = [x for x in my_daily_doc]
+        
+        if not my_general_doc:
+            mydoc = general_collection.insert_one(new_query)
+            id = mydoc.inserted_id
+            print("Dummy data inserted to create the database and collection - General Collection")
+        if my_daily_doc:
+            mydoc = daily_collection.insert_one(new_query)
+            id = mydoc.inserted_id
+            print("Dummy data inserted to create the database and collection - Daily Collection")
+
     except Exception as error:
-        print(f"Error while creating the database - {error}")
-
-
-
-def create_collection():
-    try:
-        myclient = pymongo.MongoClient(os.environ.get('DATABASE_URL'))
-        dblist = myclient.list_database_names()
-        if os.environ.get('DATABASE_NAME') in dblist:
-            mydb = myclient[os.environ.get('DATABASE_NAME')]
-            collist = mydb.list_collection_names()
-            if os.environ.get('DAILY_COLLECTION') not in collist:
-                daily_collection = mydb[os.environ.get('DAILY_COLLECTION')]
-            if os.environ.get('GENERAL_COLLECTION') not in collist:
-                general_collection = mydb[os.environ.get('GENERAL_COLLECTION')]
-            else:
-                print(">>>> Collections are present")
-        else:
-            print(">>>> Database is present")
-    except Exception as error:
-        print(f"Error while creating the collections - {error}")
+        print(f"Error while creating the Database, collections and dummy data - {error}")

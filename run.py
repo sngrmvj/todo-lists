@@ -9,11 +9,15 @@ env_name = app_config['FLASK_ENV']
 app = create_app(env_name) 
 CORS(app) 
 
-# Create Database if not exists
-initialize_db.create_database()
-# Create collections in the database if not exists
-initialize_db.create_collection()
+
+"""Importatnt (IMP)"""
+# Create Database and collections if not exists.
+# Note - Mongo DB is lazy in creating the DB and collection.
+# Note - If you are not creating any record it will not show the created DB and collections. 
+# Note - Causes confusion
+initialize_db.create_db_collections()
+
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0',port=5000)
