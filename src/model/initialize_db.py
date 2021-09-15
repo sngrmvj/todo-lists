@@ -27,12 +27,16 @@ def create_db_collections():
         
         # If they are empty we are writing the data
         if not my_general_doc:
-            mydoc = general_collection.insert_one(new_query)
+            mydoc = general_collection.insert_one(my_general_query)
             id = mydoc.inserted_id
             print("Dummy data inserted to create the database and collection - General Collection")
-        if my_daily_doc:
-            mydoc = daily_collection.insert_one(new_query)
+        else:
+            print("General Task collection is available")
+        if not my_daily_doc:
+            mydoc = daily_collection.insert_one(my_daily_query)
             id = mydoc.inserted_id
             print("Dummy data inserted to create the database and collection - Daily Collection")
+        else:
+            print("Daily Task collection is available")
     except Exception as error:
         print(f"Error while creating the Database, collections and dummy data - {error}")

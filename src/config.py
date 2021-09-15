@@ -5,7 +5,7 @@ import os
 
 os.environ["DATABASE_URL"] = "mongodb://localhost:27017/"
 os.environ['FLASK_ENV'] = 'production'
-os.environ['FLASK_PORT'] = 5000
+os.environ['FLASK_PORT'] = '5000'
 os.environ['FLASK_HOST'] = '0.0.0.0'
 os.environ['DATABASE_NAME'] = 'planners'
 os.environ['DAILY_COLLECTION'] = 'daily_tasks'
