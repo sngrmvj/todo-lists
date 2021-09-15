@@ -20,10 +20,12 @@ def create_db_collections():
         # Check whether the data is inserted or not
         my_general_doc = general_collection.find(my_general_query)
         my_daily_doc = daily_collection.find(my_daily_query)
-
+        
+        # Above variables return pymongo objects and we need to check for data inside it.
         my_general_doc = [x for x in my_general_doc]
         my_daily_doc = [x for x in my_daily_doc]
         
+        # If they are empty we are writing the data
         if not my_general_doc:
             mydoc = general_collection.insert_one(new_query)
             id = mydoc.inserted_id
@@ -32,6 +34,5 @@ def create_db_collections():
             mydoc = daily_collection.insert_one(new_query)
             id = mydoc.inserted_id
             print("Dummy data inserted to create the database and collection - Daily Collection")
-
     except Exception as error:
         print(f"Error while creating the Database, collections and dummy data - {error}")
