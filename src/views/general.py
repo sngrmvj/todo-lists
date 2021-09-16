@@ -2,6 +2,7 @@ import os,sys
 sys.path.append(os.path.abspath('./src/'))
 from src.util.service_util import custom_response, validate_token
 from flask import app, request, Blueprint, current_app
+from model import crud
 # # from config import app_config, kafka_topics
 # # from kafka import catch_kafka_error, basic_consume_loop
 
@@ -10,10 +11,24 @@ from flask import app, request, Blueprint, current_app
 general_api = Blueprint('general', __name__)
 
 
-# """Attributes"""
-# config = app_config
+"""Attributes"""
+config = app_config
 
 
+
+
+
+
+""" Get All the tasks in the general Collection"""
+@general_api.route('/person', methods=['POST'])
+def get_per_person():
+    try:
+        query = {"name":"dummy"}
+
+        value = crud.get_record(query,'general')
+        return custom_response({"response":value['general']},200)
+    except Exception as error:
+        print(f"Exception during the fetch of the persons record - {error}")
 
 
 # """Load Tasks to the DB API"""
