@@ -6,4 +6,4 @@
 
 ##### Mongo Db
 - Used Pymongo to access mongodb and created the collections required.
-
+- Receing data from the Kafka which runs as docker container.
