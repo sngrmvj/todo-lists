@@ -73,15 +73,17 @@ def get_record(query, type):
 # =================
 # Put a particular record
 # =================
-def insert_record(new_query,type):
+def insert_record(query,new_query,type):
     try:
         # Based on the type of the collection it fetches us that particular collection
         mycol = get_collection(type)
 
         # Note the query should be a dict
         mydoc = mycol.insert_one(new_query)
-        if mydoc.inserted_id:
-            return True, mydoc.inserted_id
+        
+        for item in mycol.find(query):
+            if item:
+                return item
         else:
             return False
     except Exception as error:

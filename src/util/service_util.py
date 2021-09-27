@@ -18,7 +18,7 @@ def custom_response(res, status_code):
 
 
 def validate_token(token):
-    token = token.split(" ")[1]
+    # token = token.split(" ")[1]
     try:
         payload = jwt.decode(token, os.getenv("SECRET_KEY") , algorithms=["HS256"])
         return payload

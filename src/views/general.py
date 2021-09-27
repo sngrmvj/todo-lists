@@ -26,40 +26,71 @@ def general_tasks_ping():
 
 
 """ Get All the tasks in the general Collection"""
-@general_api.route('/person', methods=['POST'])
-def receive_persons_tasks():
+@general_api.route('/post_tasks', methods=['POST','PUT'])
+def post_general_tasks():
     
     try:
-        if 'todo-accessToken' in request.cookies:
-            print(True)
         token = request.cookies.get('todo-accessToken')
-        print(token)
-        # decoded_token = validate_token(token)
+        if token:
+            decoded_token = validate_token(token)
+            username = decoded_token['firstname'] + "_" + decoded_token['lastname']
+        else:
+            return custom_response({"error":"No access token available"},404)
     except Exception as error:
         print(f"Exception during the fetch of the httponly cookies - {error}")
-        return custom_response({"response":f"Exception during the fetch of the httponly cookies - {error}"},500)
+        return custom_response({"error":f"Exception during the fetch of the httponly cookies - {error}"},500)
 
     try:
         # request body 
         data = request.get_json()
         data = data['value']
+        task = data['general']['taskItem']
 
         # Get person's record 
-        record = crud.get_record({"name":decoded_token['firstname'] + "_" + decoded_token['lastname']},'general')
-
-        if record == False:
-            insert_query = {"name":decoded_token['firstname'] + "_" + decoded_token['lastname'],'general':[data['general']]}
-            new_value = crud.insert_record(insert_query,'general')
+        record = crud.get_record({"name":username},'general')
+        if record == None:
+            insert_query = {"name":username,'general':[task]}
+            new_value = crud.insert_record({"name":username},insert_query,'general')
             return custom_response({"response":new_value['general']},201)
         else:
-            record['general'].append(data['general'])
-            update_value = crud.update_record({"name":decoded_token['firstname'] + "_" + decoded_token['lastname']},record,'general')
-            return custom_response({"response":update_value['general']},201)
+            if task not in record['general']:
+                record['general'].append(task)
+                new_query = {"$set":{'general':record['general']}}
+                update_value = crud.update_record({"name":decoded_token['firstname'] + "_" + decoded_token['lastname']},new_query,'general')
+                return custom_response({"response":update_value['general']},201)
+            else:
+                return custom_response({"response":"task already exists","warning":True},200)
     except Exception as error:
         print(f"Exception during the fetch of the persons record - {error}")
-        return custom_response({"response":f"Exception during the fetch of the persons record - {error}"},500)
+        return custom_response({"error":f"Exception during the fetch of the persons record - {error}"},500)
 
 
+
+
+
+""" Get all the tasks """
+@general_api.route('/active_tasks', methods=['GET'])
+def get_general_active_tasks():
+
+    try:
+        token = request.cookies.get('todo-accessToken')
+        if token:
+            decoded_token = validate_token(token)
+            username = decoded_token['firstname'] + "_" + decoded_token['lastname']
+        else:
+            return custom_response({"error":"No access token available"},404)
+    except Exception as error:
+        print(f"Exception during the fetch of the httponly cookies - {error}")
+        return custom_response({"error":f"Exception during the fetch of the httponly cookies - {error}"},500)
+
+    try:
+        # Get person's record 
+        record = crud.get_record({"name":username},'general')
+        if record is not None:
+            return custom_response({"response":record['general']},201)
+    except Exception as error:
+        print(f"Exception during the fetch of the general active tasks - {error}")
+        return custom_response({"error":f"Exception during the fetch of the general active tasks - {error}"},500)
 
 
 
