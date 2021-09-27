@@ -3,7 +3,7 @@ sys.path.append(os.path.abspath('./src/'))
 from src.util.service_util import custom_response, validate_token
 from flask import app, request, Blueprint, current_app
 from model import crud
-# # from config import app_config, kafka_topics
+from config import app_config
 # # from kafka import catch_kafka_error, basic_consume_loop
 
 
@@ -17,19 +17,47 @@ config = app_config
 
 
 
+"""ping"""
+@general_api.route('/ping',methods=['GET'])
+def general_tasks_ping():
+    return custom_response({"response":"For general tasks, server is working"},200)
+
+
 
 
 """ Get All the tasks in the general Collection"""
 @general_api.route('/person', methods=['POST'])
-def get_per_person():
+def receive_persons_tasks():
+    
     try:
-        query = {"name":"dummy"}
+        if 'todo-accessToken' in request.cookies:
+            print(True)
+        token = request.cookies.get('todo-accessToken')
+        print(token)
+        # decoded_token = validate_token(token)
+    except Exception as error:
+        print(f"Exception during the fetch of the httponly cookies - {error}")
+        return custom_response({"response":f"Exception during the fetch of the httponly cookies - {error}"},500)
 
-        value = crud.get_record(query,'general')
-        return custom_response({"response":value['general']},200)
+    try:
+        # request body 
+        data = request.get_json()
+        data = data['value']
+
+        # Get person's record 
+        record = crud.get_record({"name":decoded_token['firstname'] + "_" + decoded_token['lastname']},'general')
+
+        if record == False:
+            insert_query = {"name":decoded_token['firstname'] + "_" + decoded_token['lastname'],'general':[data['general']]}
+            new_value = crud.insert_record(insert_query,'general')
+            return custom_response({"response":new_value['general']},201)
+        else:
+            record['general'].append(data['general'])
+            update_value = crud.update_record({"name":decoded_token['firstname'] + "_" + decoded_token['lastname']},record,'general')
+            return custom_response({"response":update_value['general']},201)
     except Exception as error:
         print(f"Exception during the fetch of the persons record - {error}")
-
+        return custom_response({"response":f"Exception during the fetch of the persons record - {error}"},500)
 
 # """Load Tasks to the DB API"""
 # # @general_api.route('/load', methods=['POST'])

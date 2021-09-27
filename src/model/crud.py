@@ -102,7 +102,7 @@ def update_record(query,new_values,type):
         mycol.update_one(query,new_values)
         for item in mycol.find(query):
             if item:
-                return True
+                return item
         else:
             return False
 

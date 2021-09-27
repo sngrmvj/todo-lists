@@ -8,8 +8,7 @@ import os
 
 env_name = app_config['FLASK_ENV']
 app = create_app(env_name) 
-CORS(app) 
-
+CORS(app, resources={ r'/*': {'origins': app_config['CORS_URL_ORIGINS']}}, supports_credentials=True)
 
 """Importatnt (IMP)"""
 # Create Database and collections if not exists.
@@ -21,4 +20,4 @@ initialize_db.create_db_collections()
 
 
 if __name__ == "__main__":
-    app.run(host=os.environ.get('FLASK_HOST'),port=os.environ.get('FLASK_PORT'))
+    app.run(port=os.environ.get('FLASK_PORT'),debug=True)

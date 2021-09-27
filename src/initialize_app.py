@@ -20,7 +20,7 @@ def create_app(env_name):
 
 
   # Add Blueprints here 
-  app.register_blueprint(general_api, url_prefix='/todo/v1/general') 
+  app.register_blueprint(general_api, url_prefix='/todo/general') 
 
 
   return app
