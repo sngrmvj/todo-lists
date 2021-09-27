@@ -59,6 +59,11 @@ def receive_persons_tasks():
         print(f"Exception during the fetch of the persons record - {error}")
         return custom_response({"response":f"Exception during the fetch of the persons record - {error}"},500)
 
+
+
+
+
+
 # """Load Tasks to the DB API"""
 # # @general_api.route('/load', methods=['POST'])
 # def send_user_general_tasks():
