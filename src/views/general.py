@@ -1,10 +1,9 @@
 import os,sys
 sys.path.append(os.path.abspath('./src/'))
 from src.util.service_util import custom_response, validate_token
-from flask import app, request, Blueprint, current_app
+from flask import app, request, Blueprint
 from model import crud
 from config import app_config
-# # from kafka import catch_kafka_error, basic_consume_loop
 
 
 """Blueprint"""
@@ -15,6 +14,9 @@ general_api = Blueprint('general', __name__)
 config = app_config
 
 
+
+
+# --------------------------------------------------------------------------------------------------------------------------
 
 
 """ >>>> Functions """
@@ -35,7 +37,7 @@ def verify_user():
 
 
 
-
+# --------------------------------------------------------------------------------------------------------------------------
 
 """ping"""
 @general_api.route('/ping',methods=['GET'])
@@ -43,7 +45,11 @@ def general_tasks_ping():
     return custom_response({"response":"For general tasks, server is working"},200)
 
 
+# --------------------------------------------------------------------------------------------------------------------------
 
+
+
+# --------------------------------------------------------------------------------------------------------------------------
 
 """ Get All the tasks in the general Collection"""
 @general_api.route('/post_tasks', methods=['POST','PUT'])
@@ -83,7 +89,15 @@ def post_general_tasks():
         return custom_response({"error":f"Exception during the fetch of the persons record - {error}"},500)
 
 
+# --------------------------------------------------------------------------------------------------------------------------
 
+
+
+
+
+
+
+# --------------------------------------------------------------------------------------------------------------------------
 
 
 """ Get all the tasks """
@@ -110,7 +124,13 @@ def get_general_active_tasks():
         return custom_response({"error":f"Exception during the fetch of the general active tasks - {error}"},500)
 
 
+# --------------------------------------------------------------------------------------------------------------------------
 
+
+
+
+
+# --------------------------------------------------------------------------------------------------------------------------
 
 
 """ Toggle items """
@@ -154,6 +174,13 @@ def toggle_tasks():
         return custom_response({"error":f"Exception during the fetch of the general active tasks - {error}"},500)
 
 
+# --------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+# --------------------------------------------------------------------------------------------------------------------------
 
 
 """Get Tasks to the DB API"""
@@ -187,3 +214,6 @@ def delete_active_tasks():
     except Exception as error:
         print(f"Exception during the fetch of the general active tasks - {error}")
         return custom_response({"error":f"Exception during the fetch of the general active tasks - {error}"},500)
+
+
+# --------------------------------------------------------------------------------------------------------------------------
