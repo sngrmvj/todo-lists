@@ -5,6 +5,7 @@ import os,sys
 sys.path.append(os.path.abspath('./src/')) 
 from src.config import app_config 
 from src.views.general import general_api
+from src.views.daily import daily_api
 
 
 def create_app(env_name):
@@ -21,6 +22,7 @@ def create_app(env_name):
 
   # Add Blueprints here 
   app.register_blueprint(general_api, url_prefix='/todo/general') 
+  app.register_blueprint(daily_api, url_prefix='/todo/daily') 
 
 
   return app

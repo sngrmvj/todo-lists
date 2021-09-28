@@ -7,7 +7,7 @@ from config import app_config
 
 
 """Blueprint"""
-general_api = Blueprint('daily', __name__)
+daily_api = Blueprint('daily', __name__)
 
 
 """Attributes"""
