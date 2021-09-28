@@ -116,6 +116,7 @@ def get_general_active_tasks():
 """ Toggle items """
 @general_api.route('/toggle',methods=['PUT'])
 def toggle_tasks():
+
     value, booleans, status = verify_user()
     if booleans == False:
         return custom_response({"error": value}, status)
@@ -146,26 +147,43 @@ def toggle_tasks():
             new_query = {"$set":{'active':record['active'],'deactive':sorted(record['deactive'])}}
             update_value = crud.update_record({"name": username},new_query,type)
             return custom_response({"response":{"active":update_value['active'],"deactive":update_value['deactive']}},201)
+        else:
+            raise Exception("No user found")
     except Exception as error:
         print(f"Exception during the fetch of the general active tasks - {error}")
         return custom_response({"error":f"Exception during the fetch of the general active tasks - {error}"},500)
 
 
-# Things to be done
-# Permanently delete the task. 
-
-
 
 
 """Get Tasks to the DB API"""
-@general_api.route('/delete_active', methods=['PUT'])
+@general_api.route('/delete', methods=['PUT'])
 def delete_active_tasks():
+    value, booleans, status = verify_user()
+    if booleans == False:
+        return custom_response({"error": value}, status)
+    else:
+        username = value
 
-    pass
-
-
-"""Get Tasks to the DB API"""
-@general_api.route('/delete_deactive', methods=['PUT'])
-def delete_deactive_tasks():
-
-    pass
+    try:
+        type = 'general'
+        # Query Parameters
+        category = request.args['category']
+        # Request Body 
+        data = request.get_json()
+        task = data['value']
+        # Get person's record 
+        record = crud.get_record({"name":username},type)
+        if record is not None:
+            if category == 'general_tasks':
+                record['active'].remove(task)
+            else:
+                record['deactive'].remove(task)
+            new_query = {"$set":{'active':record['active'],'deactive':sorted(record['deactive'])}}
+            update_value = crud.update_record({"name": username},new_query,type)
+            return custom_response({"response":{"active":update_value['active'],"deactive":update_value['deactive']}},201)
+        else:
+            raise Exception("No user found")
+    except Exception as error:
+        print(f"Exception during the fetch of the general active tasks - {error}")
+        return custom_response({"error":f"Exception during the fetch of the general active tasks - {error}"},500)
