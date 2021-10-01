@@ -31,26 +31,6 @@ class Production(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
-# """kafka Section"""
-# # kafka producer creation
-# producer_config = {'bootstrap.servers': "host1:9092,host2:9092",
-#         'client.id': socket.gethostname()}
-# producer = Producer(producer_config)
-
-
-# # kafka Consumer creation
-# consumer_config = {'bootstrap.servers': "host1:9092,host2:9092",
-#         'group.id': "todo_consumer_group",
-#         'auto.offset.reset': 'earliest'}
-# consumer = Consumer(consumer_config)
-
-# # Kafka topic details
-# kafka_topics ={
-#     'daily' : ['daily_send','daily_receive'],
-#     'general':['general_send','general_receive']
-# }
-
-
 
 """App config section"""
 
@@ -63,8 +43,6 @@ app_config = {
         'http://localhost:4200',
         'http://127.0.0.1:4200',  
     ],
-    # 'kafka_producer': producer,
-    # 'kafka_consumer': consumer
     # In the Flask Env we use 'developement or production'. It refers to here which calls the Development and Prouction class
 }
 

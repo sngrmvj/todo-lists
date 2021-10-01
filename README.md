@@ -1,6 +1,2 @@
-# To Do Lists
+# To Do Tasks
 
-##### Steps
-
-##### Mongo Db
-- Used Pymongo to access mongodb and created the collections required.
