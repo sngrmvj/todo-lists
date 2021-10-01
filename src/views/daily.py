@@ -119,6 +119,8 @@ def get_daily_active_tasks():
         record = crud.get_record({"name":username},type)
         if record is not None:
             return custom_response({"response":{"active":record['active'],"deactive":record['deactive']}},201)
+        else:
+            return custom_response({"warning":"Daily tasks are empty"},200)
     except Exception as error:
         print(f"Exception during the fetch of the daily active tasks - {error}")
         return custom_response({"error":f"Exception during the fetch of the daily active tasks - {error}"},500)
