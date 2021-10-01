@@ -187,7 +187,7 @@ def toggle_tasks():
 
 """Get Tasks to the DB API"""
 @daily_api.route('/delete', methods=['PUT'])
-def delete_active_tasks():
+def delete_daily_active_tasks():
     value, booleans, status = verify_user()
     if booleans == False:
         return custom_response({"error": value}, status)
@@ -198,6 +198,7 @@ def delete_active_tasks():
         type = 'daily'
         # Query Parameters
         category = request.args['category']
+        print(category)
         # Request Body 
         data = request.get_json()
         task = data['value']
@@ -213,6 +214,53 @@ def delete_active_tasks():
             return custom_response({"response":{"active":update_value['active'],"deactive":update_value['deactive']}},201)
         else:
             raise Exception("No user found")
+    except Exception as error:
+        print(f"Exception during the fetch of the daily active tasks - {error}")
+        return custom_response({"error":f"Exception during the fetch of the daily active tasks - {error}"},500)
+
+
+# --------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+# --------------------------------------------------------------------------------------------------------------------------
+
+
+""" Get all the tasks """
+@daily_api.route('/refresh', methods=['GET'])
+def get_daily_refresh_tasks():
+
+    value, booleans, status = verify_user()
+    if booleans == False:
+        return custom_response({"error": value}, status)
+    else:
+        username = value
+
+
+    try:
+        #Attributes
+        type = 'daily'
+
+        # Get person's record 
+        record = crud.get_record({"name":username},type)
+        if record is not None:
+            # Adding all the items from the list to the active list
+            for item in record['deactive']:
+                record['active'].append(item)
+            # Emptying the list of deactive
+            record['deactive'].clear()
+            new_query = {"$set":{'active':record['active'],'deactive':sorted(record['deactive'])}}
+            update_value = crud.update_record({"name": username},new_query,type)
+            return custom_response({"response":{"active":update_value['active'],"deactive":update_value['deactive']}},201)
+        else:
+            return custom_response({"warning":"Daily tasks are empty"},200)
     except Exception as error:
         print(f"Exception during the fetch of the daily active tasks - {error}")
         return custom_response({"error":f"Exception during the fetch of the daily active tasks - {error}"},500)

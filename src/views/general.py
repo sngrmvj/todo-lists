@@ -187,7 +187,7 @@ def toggle_tasks():
 
 """Get Tasks to the DB API"""
 @general_api.route('/delete', methods=['PUT'])
-def delete_active_tasks():
+def delete_general_active_tasks():
     value, booleans, status = verify_user()
     if booleans == False:
         return custom_response({"error": value}, status)
