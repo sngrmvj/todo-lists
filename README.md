@@ -39,6 +39,6 @@ To do tasks is normal to do lists with extra feature of tasks getting refreshed 
 
 #### Repo Links
 - Authentication Server (todo-auth)
-    - > `https://github.com/sngrmvj/todo-auth`
+    - > https://github.com/sngrmvj/todo-auth
 - User Interface (todo-ui)
-    - > `https://github.com/sngrmvj/todo-ui`
+    - > https://github.com/sngrmvj/todo-ui
