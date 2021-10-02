@@ -1,16 +1,5 @@
 
-# from confluent_kafka import Producer, Consumer
-import socket
 import os
-
-os.environ["DATABASE_URL"] = "mongodb://localhost:27017/"
-os.environ['FLASK_ENV'] = 'production'
-os.environ['FLASK_PORT'] = '5000'
-os.environ['DATABASE_NAME'] = 'planners'
-os.environ['DAILY_COLLECTION'] = 'daily_tasks'
-os.environ['GENERAL_COLLECTION'] = 'general_tasks'
-os.environ['SECRET_KEY'] = 'django-insecure-06%z8j%5jube2n@_wfa6jbemh-m2gh&ql-&67db9^qosycj#$z'
-os.environ['ACCESS_TOKEN'] = 'todo-accessToken'
 
 
 class Development(object):

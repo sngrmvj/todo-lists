@@ -30,10 +30,20 @@ To do tasks is normal to do lists with extra feature of tasks getting refreshed 
     - Application is built using python flask framework.
     - Database used is mongodb (since the tasks are not consistent and for array based structure document based database suits).
     - User verification is done by decoding the jwt token (httponly access token). The token is provided by authentication server. The httponly token is set as cookie and can be accessed by server only.
-        - Note: The secret key used is the server should be used to here as well for validating the jwt token.
     - REST APIs are used for accessing the tasks and crud operations on it. The APIs are categorized into daily_taska and general_tasks apis.
     - Secrets are encoded.
     - Application is dockerized to provide container based approach. Now application which can be deployed and can be scaled easily.
+- Environment Variables to be provided before you run the application. (Either in dockerfile or docker-compose.yml)
+    - SECRET_KEY
+    - DATABASE_NAME
+    - DATABASE_HOST
+    - DATABASE_PORT
+    - DATABASE_URL
+    - FLASK_ENV
+    - FLASK_PORT
+    - DAILY_COLLECTION
+    - GENERAL_COLLECTION
+    - ACCESS_TOKEN
 
 ---
 
