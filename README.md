@@ -27,12 +27,15 @@ To do tasks is normal to do lists with extra feature of tasks getting refreshed 
     - todo-ui
         - User Interface (More info check the repo)
 - Current Application (todo-lists)
-    - Application is built using python flask framework.
-    - Database used is mongodb (since the tasks are not consistent and for array based structure document based database suits).
-    - User verification is done by decoding the jwt token (httponly access token). The token is provided by authentication server. The httponly token is set as cookie and can be accessed by server only.
-    - REST APIs are used for accessing the tasks and crud operations on it. The APIs are categorized into daily_taska and general_tasks apis.
-    - Secrets are encoded.
-    - Application is dockerized to provide container based approach. Now application which can be deployed and can be scaled easily.
+    - Application is built using Python Flask Framework. Database is MongoDB
+    - Since the database used is MongoDB (the tasks are not consistent and for array-based structure document-based database suits).
+        - Querying of database happens using the name of the individual (decoded from access token)
+    - User verification is done by decoding the JWT token (httponly access token).
+        - The token is kept as a cookie in the browser by the authentication server and the frontend cannot access it.
+    - The APIs are categorized into daily_tasks and general_tasks APIs.
+    - Secrets are provided as environmental variables.
+    - Application is dockerized to provide container based approach.
+        - Application which can be deployed and can be scaled easily.
 - Environment Variables to be provided before you run the application. (Either in dockerfile or docker-compose.yml)
     - SECRET_KEY
     - DATABASE_NAME
