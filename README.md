@@ -47,6 +47,12 @@ To do tasks is normal to do lists with extra feature of tasks getting refreshed 
     - DAILY_COLLECTION
     - GENERAL_COLLECTION
     - ACCESS_TOKEN
+- Local setup 
+  - Install python.
+  - `pip install -r requirements.txt`.
+  - `python run.py`.
+        - If you want it run on different port, please specify as the environmental variable in the name of FLASK_PORT.
+        - Add that in the User Interface as well.
 
 ---
 
